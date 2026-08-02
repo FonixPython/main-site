@@ -1,0 +1,24 @@
+h1 {
+    background: var(--highlight-gradient);
+    background-clip: text;
+    font-size: 3rem;
+    user-select: none;
+}
+
+h1 span {
+    color: transparent;
+}
+
+.navBar {
+    position: sticky;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    background-color: color-mix(in srgb, var(--bg-dark) 45%, rgba(0, 0, 0, 0) 25%);
+    backdrop-filter: blur(5px);
+    padding: 5px;
+    border: 0;
+    border-bottom: 5px;
+    border-style: ridge;
+    border-image: var(--highlight-gradient) 1;
+}
