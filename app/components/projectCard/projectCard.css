@@ -1,0 +1,65 @@
+.projectCard {
+    display: flex;
+    flex-direction: column;
+    width: 16rem;
+    margin: 5px;
+    padding: 7px;
+    border: 5px ridge var(--text);
+    background-color: var(--bg-light);
+}
+
+.projectCard:hover {
+    scale: 1.02;
+    transition: 0.1s ease-in;
+}
+
+
+.projectCard .textContainer {
+    height: 50%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.projectCard img {
+    height: auto;
+}
+
+.projectCard h3 {
+    font-size: 2.1rem;
+    font-weight: 200;
+}
+
+.projectCard p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.projectCard .textContainer div {
+    width: 95%;
+    height: 3rem;
+    color: var(--text);
+    background-color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin-top: auto;
+    border: 2px solid var(--highlight);
+}
+
+.projectCard .textContainer div:hover {
+    border-image: var(--highlight-gradient) 1;
+}
+
+.projectCard .textContainer div:active {
+    background: var(--highlight-gradient);
+    transition: .5s;
+}
+
+.projectCard a {
+    font-size: 1.3rem;
+    text-decoration: none;
+    color: var(--text);
+}

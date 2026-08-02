@@ -1,11 +1,15 @@
 .heroBox {
-    height: 80vh;
+    height: calc(100vh - 4rem);
     width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     user-select: none;
+    border: 0;
+    border-bottom: 5px;
+    border-style: solid;
+    border-image: var(--highlight-gradient) 1;
 }
 
 #line1 {
