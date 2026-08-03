@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model sessions {
+  token            String        @id @db.VarChar(255)
+  userAgent        String        @db.Text
+  generationDate   DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+}
+
+model images {
+  id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
+  filename         String        @db.Text
+  alt              String        @db.Text
+  date_of_creation DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+}
+
+model projects {
+  id               Int           @id @default(autoincrement())
+  title            String        @db.Text
+  imageId          String        @db.Text
+  shortDescription String        @db.Text
+  github           String        @db.Text
+  date_of_creation DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+}
