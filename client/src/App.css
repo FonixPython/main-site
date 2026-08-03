@@ -22,7 +22,7 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  background-image: url("./static/bg.png");
+  background-image: url("./assets/bg.png");
   background-repeat: repeat-y;
   background-size: cover;
   background-attachment: fixed;

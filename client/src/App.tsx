@@ -1,8 +1,8 @@
-import { NavBar } from "../components/navbar/navbar";
-import { Hero } from "../components/hero/hero";
-import { ProjectCard } from "../components/projectCard/projectCard";
-import { About } from "~/components/about/about";
-import { Footer } from "~/components/footer/footer";
+import { NavBar } from "./components/navbar/navbar";
+import { Hero } from "./components/hero/hero";
+import { ProjectCard } from "./components/projectCard/projectCard";
+import { About } from "./components/about/about";
+import { Footer } from "./components/footer/footer";
 
 export function Index() {
     return (
