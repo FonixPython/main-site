@@ -1,11 +1,14 @@
 import { NavBar } from "../components/navbar/navbar";
 import { Hero } from "../components/hero/hero";
 import { ProjectCard } from "../components/projectCard/projectCard";
+import { About } from "~/components/about/about";
+import { Footer } from "~/components/footer/footer";
 
 export function Index() {
     return (
         <main>
             <NavBar></NavBar>
+            <div id="home" style={{ height: "4rem" }}></div>
             <Hero></Hero>
             <div className="cardSection">
                 <h2 id="projects">My <span className="highlighted">projects</span></h2>
@@ -16,6 +19,8 @@ export function Index() {
                     <ProjectCard imageUrl="cigoriaDown.webp" name="cigoriaDown" description="A TUI built in python for downloading music with metadata from Youtube and Spotify!" github="https://github.com/FonixPython/LEDMatrix"></ProjectCard>
                 </div>
             </div>
+            <About></About>
+            <Footer></Footer>
         </main>
     )
 }
