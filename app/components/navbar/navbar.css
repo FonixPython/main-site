@@ -1,0 +1,50 @@
+h1 {
+    background: var(--highlight-gradient);
+    background-clip: text;
+    font-size: 3rem;
+    user-select: none;
+}
+
+h1 span {
+    color: transparent;
+}
+
+
+.navBar {
+    position: fixed;
+    z-index: 1000;
+    height: 4rem;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    background-color: color-mix(in srgb, var(--bg-dark) 45%, rgba(0, 0, 0, 0) 25%);
+    backdrop-filter: blur(5px);
+    padding: 5px;
+    border: 0;
+    border-bottom: 5px;
+    border-style: ridge;
+    border-image: var(--highlight-gradient) 1;
+}
+
+.navigationGroup {
+    width: 100vw;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigationGroup a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--text);
+    margin: 10px;
+}
+
+.navigationGroup a:hover {
+    scale: 1.1;
+    background: var(--highlight-gradient);
+    background-clip: text;
+    color: transparent;
+    transition: .1s ease-in;
+}

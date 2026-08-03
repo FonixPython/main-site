@@ -1,0 +1,40 @@
+.heroBox {
+    height: calc(100vh - 4rem);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    border: 0;
+    border-bottom: 5px;
+    border-style: solid;
+    border-image: var(--highlight-gradient) 1;
+}
+
+#line1 {
+    font-size: 4rem;
+}
+
+#line2 {
+    text-align: center;
+    width: 8ch;
+    letter-spacing: 0.2rem;
+    font-size: 6rem;
+    background: var(--highlight-gradient);
+    background-clip: text;
+    color: transparent;
+    animation:
+        typing 3s steps(8);
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 8ch;
+    }
+}
