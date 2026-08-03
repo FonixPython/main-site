@@ -10,19 +10,19 @@ export function About() {
                 <p>Most of my development experience is in <span className="highlighted">backend development</span>  with both <span style={{ color: "#3771a2" }}>Python</span> and <span style={{ color: "#f7df1e" }}>Javascript</span>.</p>
                 <div className="buttonContainer">
                     <p>Socials: </p>
-                    <a href="https://github.com/FonixPython">
+                    <a href="https://github.com/FonixPython" target="_blank">
                         <div className="socialsButton">
                             <img src="github.png" alt="Logo of github" />
                             GitHub
                         </div>
                     </a>
-                    <a href="https://www.youtube.com/@skyfonix1">
+                    <a href="https://www.youtube.com/@skyfonix1" target="_blank">
                         <div className="socialsButton">
                             <img src="unsplash.png" alt="Logo of unsplash" />
                             Unsplash
                         </div>
                     </a>
-                    <a href="https://www.youtube.com/@skyfonix1">
+                    <a href="https://www.youtube.com/@skyfonix1" target="_blank">
                         <div className="socialsButton">
                             <img src="youtube.png" alt="Logo of youtube" />
                             YouTube channel
@@ -31,7 +31,7 @@ export function About() {
                 </div>
                 <div className="buttonContainer">
                     <p>Contact me:</p>
-                    <a href="mailto:skyfonix@cigoria.eu">
+                    <a href="mailto:skyfonix@cigoria.eu" target="_blank">
                         <div className="socialsButton">
                             E-mail: skyfonix@cigoria.eu
                         </div>
