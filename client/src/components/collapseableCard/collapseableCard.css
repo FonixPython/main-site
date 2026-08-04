@@ -1,0 +1,48 @@
+.collapseableCard {
+    width: 95%;
+    border: 10px ridge var(--highlight)
+}
+
+.collapseableCard hr {
+    border: 3px solid;
+    border-image: var(--highlight-gradient) 1;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.collapseableCard .handleBar {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+}
+
+.collapseableCard .handleBar button {
+    margin-left: auto;
+    margin-right: 10px;
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+}
+
+.collapseableCard .handleBar img {
+    height: 2rem;
+}
+
+.collapseableCard .handleBar p {
+    margin-left: auto;
+    margin-right: 10px;
+    font-size: 2rem;
+    color: var(--danger);
+}
+
+.collapseableCard .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upsideDown {
+    transform: rotate(180deg);
+}

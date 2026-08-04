@@ -1,8 +1,10 @@
 import express from "express";
-import { Request, Response } from 'express';
+import cookieParser from "cookie-parser";
+import { router } from "./routes";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
+import os from "os"
 
 dotenv.config();
 const PORT = Number(process.env.PORT) || 3000;
@@ -14,15 +16,35 @@ const corsOptions = {
 const app = express();
 
 app.use(cors(corsOptions))
+app.use(express.json());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.get("/api", async (req: Request, res: Response) => {
-    res.json({ name: "idiot" });
-})
+app.use("/", router)
 
-app.get("/", async (req: Request, res: Response) => {
-    res.sendFile("public/index.html");
-})
+
+function getIPv4Addresses() {
+    const interfaces = os.networkInterfaces();
+    const addresses = [];
+    for (const name of Object.keys(interfaces)) {
+        const networkInterface = interfaces[name];
+        if (networkInterface) {
+            for (const inter of networkInterface) {
+                if (inter.family === "IPv4" && !inter.internal) {
+                    addresses.push(inter.address);
+                }
+            }
+        }
+    }
+    return addresses;
+}
+
 
 app.listen(PORT, () => {
-    console.log("Server started on port " + String(PORT));
+    console.log("Server is Running");
+    console.log(`http://localhost:${PORT}`);
+
+    const ipAddresses = getIPv4Addresses();
+    ipAddresses.forEach((ip: string) => {
+        console.log(`http://${ip}:${PORT}`);
+    });
 });
