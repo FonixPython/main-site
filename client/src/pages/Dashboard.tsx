@@ -4,13 +4,30 @@ import { useEffect, useState } from "react";
 import { NavBar } from "../components/navbar/navbar";
 import { CollapseableCard } from "../components/collapseableCard/collapseableCard";
 import { DashboardProjectCard } from "../components/dashboardProjectCard/dashboardProjectCard";
+import { LoginPage } from "./Login";
 
 
 
 
 export function Dashboard() {
     const navigate = useNavigate();
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [projects, setProjects] = useState([])
+
+    async function checkAuthState() {
+        const result = await fetch("/api/validateSession")
+        if (result.status == 200) {
+            const jsonResponse = await result.json()
+            if (jsonResponse.authorized) {
+                setIsLoggedIn(true)
+            } else {
+                setIsLoggedIn(false)
+            }
+        } else {
+            setIsLoggedIn(false)
+        }
+    }
 
     async function reloadProjects() {
         try {
@@ -49,18 +66,22 @@ export function Dashboard() {
     }
 
     useEffect(() => {
+        checkAuthState();
         reloadProjects();
     }, []);
 
     return (
-        <main>
+        <main className="dashboard">
             <NavBar>
-                <button onClick={logout}>Logout</button>
+                {isLoggedIn && <button onClick={logout} className="logoutButton">Logout</button>}
             </NavBar>
-            <CollapseableCard title="Projects">
-                <button onClick={newProject}>Create new project</button>
-                {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} />) )}
-            </CollapseableCard>
+            {(isLoggedIn == false) && <LoginPage onLoggedIn={checkAuthState} />}
+            {isLoggedIn && <div className="dashboardContent">
+                <CollapseableCard title="Projects">
+                    <button onClick={newProject} style={{ width: "95%", marginTop:"10px"}}>Create new project</button>
+                    {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
+                </CollapseableCard>
+            </div>}
         </main>
     )
 }

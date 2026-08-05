@@ -68,7 +68,6 @@ export async function loginAdmin(username: string, password: string, agent_text:
 export async function handleLogin(req: Request, res: Response) {
     if (req.body.username && req.body.password) {
         const loginResult = await loginAdmin(req.body.username, req.body.password, req.headers["user-agent"])
-        console.log(loginResult.token)
         if (loginResult.token) {
             res.cookie("sessionToken", loginResult.token, {
                 httpOnly: true,

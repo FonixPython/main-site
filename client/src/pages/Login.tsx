@@ -1,32 +1,31 @@
 import "./Login.css"
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
 
 
-export function LoginPage() {
+export function LoginPage(props) {
+    const credentials = {
+        username: "",
+        password: ""
+    }
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        credentials[name] = value;
+    }
 
-    const isLoggedIn = fetch("/api/validateSession")
-    isLoggedIn.then((value) => {
-        console.log(value)
-        if (value.status == 200) {
-            self
-        }
-    })
-
-    async function login() {
-        const navigate = useNavigate();
-        const usernameInput = document.getElementById("usernameInput")
-        const passwordInput = document.getElementById("passwordInput")
-        const data = {
-            "username": usernameInput.value,
-            "password": passwordInput.value
-        }
-        const result = await axios.post(
-            "/api/login",
-            data
-        )
+    async function login(e) {
+        e.preventDefault()
+        const result = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials)
+        })
         if (result.status == 200) {
-            navigate("/dash")
+            if (props.onLoggedIn) {
+                props.onLoggedIn()
+            }
         } else {
             document.getElementById("title").innerText = "Error"
             document.getElementById("title").style.color = "#FF383C"
@@ -34,17 +33,17 @@ export function LoginPage() {
     }
 
     return (
-        <main className="pageContainer">
+        <div className="pageContainer">
             <div className="loginBox">
                 <h1 id="title">Login</h1>
-                <form>
-                    <input id="usernameInput" type="username" placeholder="Username" />
+                <form onSubmit={login}>
+                    <input type="username" name="username" placeholder="Username" onChange={handleChange} />
                     <br />
-                    <input id="passwordInput" type="password" placeholder="Password" />
+                    <input type="password" name="password" placeholder="Password" onChange={handleChange} />
                     <br />
-                    <button className="submitButton" onClick={login}>Login</button>
+                    <input type="submit" className="submitButton" value="Login" />
                 </form>
             </div>
-        </main>
+        </div>
     )
 }

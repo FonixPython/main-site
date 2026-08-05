@@ -18,9 +18,23 @@ export function DashboardProjectCard(props) {
             setMode("view")
         }
     }
+
     async function cancelChanges() {
         setProject(props.project)
         setMode("view")
+    }
+
+    async function deleteProject() {
+        const result = await fetch("/api/deleteProject", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: project.id
+            })
+        })
+        if (props.deletionCallback) { props.deletionCallback() }
     }
 
     const handleChange = (e) => {
@@ -47,8 +61,9 @@ export function DashboardProjectCard(props) {
                     <p>Public:</p>
                     <input type="checkbox" name="public" value={project.public} onChange={handleChange} />
                     <div style={{ display: "flex" }}>
-                        <button onClick={saveChanges}>Save</button>
                         <button onClick={cancelChanges}>Cancel</button>
+                        <button onClick={saveChanges}>Save</button>
+                        <button onClick={deleteProject}>Delete</button>
                     </div>
                 </div>
                 <ProjectCard

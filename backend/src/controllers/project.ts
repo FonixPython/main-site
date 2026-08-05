@@ -12,6 +12,15 @@ export async function getProjects(req: Request, res: Response) {
     }
 }
 
+export async function getPublicProjects(req: Request, res: Response) {
+    const result = await prisma.projects.findMany({ where: { public: true } });
+    if (result) {
+        return res.json(result).status(200)
+    } else {
+        return res.sendStatus(500)
+    }
+}
+
 export async function getProject(req: Request, res: Response) {
     if (req.body.id) {
         const result = await prisma.projects.findFirstOrThrow({ where: { id: req.body.id } })
