@@ -1,10 +1,14 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { router } from "./routes";
+import { router } from "./routes.js";
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
 import os from "os"
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const PORT = Number(process.env.PORT) || 3000;

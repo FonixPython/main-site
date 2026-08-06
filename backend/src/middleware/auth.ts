@@ -1,4 +1,4 @@
-import { verifyToken } from "../controllers/login";
+import { verifyToken } from "../controllers/login.js";
 import { Request, Response, NextFunction } from "express";
 
 

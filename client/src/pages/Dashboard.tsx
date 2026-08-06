@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { NavBar } from "../components/navbar/navbar";
 import { CollapseableCard } from "../components/collapseableCard/collapseableCard";
 import { DashboardProjectCard } from "../components/dashboardProjectCard/dashboardProjectCard";
+import { SocialEditorCard } from "../components/socialEditorCard/socialEditorCard";
+import { FileCard } from "../components/fileCard/fileCard";
+import { AboutEditor } from "../components/aboutEditor/aboutEditor";
 import { LoginPage } from "./Login";
 
 
@@ -35,7 +38,7 @@ export function Dashboard() {
             const jsonResponse = await response.json();
             setProjects(jsonResponse);
         } catch (error) {
-            console.error("Failed to load projects:", error);
+            console.error(error);
         }
     }
 
@@ -70,6 +73,79 @@ export function Dashboard() {
         reloadProjects();
     }, []);
 
+
+    const [socials, setSocials] = useState([])
+
+    async function reloadSocials() {
+        try {
+            const response = await fetch("/api/getSocials");
+            const jsonResponse = await response.json();
+            setSocials(jsonResponse);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function addSocial() {
+        const result = await fetch("/api/createSocial", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: "New social",
+                iconUrl: "/placeholder.webp",
+                url: "/"
+            })
+        })
+        if (result.status == 200) {
+            reloadSocials()
+        }
+    }
+
+    useEffect(() => {
+        reloadSocials();
+    }, [])
+
+    const [uploads, setUploads] = useState([])
+    const [selectedFile, setSelectedFile] = useState(null);
+    async function reloadUploads() {
+        const result = await fetch("/api/getUploads")
+        const jsonResult = await result.json()
+        setUploads(jsonResult)
+    }
+
+    async function uploadFile(e) {
+        e.preventDefault()
+        if (!selectedFile) {
+            alert("Please select a file first.");
+            return;
+        }
+        const formData = new FormData()
+        formData.append("file", selectedFile)
+
+        try {
+            const result = await fetch("/api/upload", {
+                method: "POST",
+                body: formData
+            })
+            if (result.status == 200) {
+                setSelectedFile(null)
+                e.target.reset()
+                reloadUploads()
+            } else {
+                alert("Failed to upload!")
+                return
+            }
+        } catch {
+            alert("Failed to upload!")
+        }
+    }
+
+    useEffect(() => {
+        reloadUploads()
+    }, [])
+
     return (
         <main className="dashboard">
             <NavBar>
@@ -78,8 +154,22 @@ export function Dashboard() {
             {(isLoggedIn == false) && <LoginPage onLoggedIn={checkAuthState} />}
             {isLoggedIn && <div className="dashboardContent">
                 <CollapseableCard title="Projects">
-                    <button onClick={newProject} style={{ width: "95%", marginTop:"10px"}}>Create new project</button>
+                    <button onClick={newProject} style={{ width: "95%", marginTop: "10px" }}>Create new project</button>
                     {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
+                </CollapseableCard>
+                <CollapseableCard title="Uploads">
+                    <form onSubmit={uploadFile}>
+                        <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
+                        <input type="submit" value="Upload" />
+                    </form>
+                    {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} />))}
+                </CollapseableCard>
+                <CollapseableCard title="About section">
+                    <AboutEditor />
+                    <CollapseableCard title="Socials">
+                        <button onClick={addSocial} style={{ width: "95%", marginTop: "10px" }}>Add social platform link</button>
+                        {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} />))}
+                    </CollapseableCard>
                 </CollapseableCard>
             </div>}
         </main>

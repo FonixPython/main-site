@@ -3,7 +3,6 @@ import { Hero } from "../components/hero/hero";
 import { ProjectCard } from "../components/projectCard/projectCard";
 import { About } from "../components/about/about";
 import { Footer } from "../components/footer/footer";
-import { CollapseableCard } from "../components/collapseableCard/collapseableCard";
 import { useState, useEffect } from "react";
 
 

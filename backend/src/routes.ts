@@ -1,8 +1,10 @@
 import express from 'express';
 import { Request, Response } from 'express';
-import { validateSession } from './middleware/auth';
-import { handleLogin, handleLogout, handleTokenVerify } from './controllers/login';
-import { getProjects, getProject, createProject, editProject, deleteProject, getPublicProjects } from './controllers/project';
+import { validateSession } from './middleware/auth.js';
+import { handleLogin, handleLogout, handleTokenVerify } from './controllers/login.js';
+import { getProjects, getProject, createProject, editProject, deleteProject, getPublicProjects } from './controllers/project.js';
+import { getAboutInfo, setAboutInfo, getSocials, createSocial, editSocial, deleteSocial } from './controllers/about.js';
+import { uploadMiddleware, uploadFile, getFile, deleteFile, getUploads } from './controllers/upload.js';
 export const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
@@ -23,4 +25,22 @@ router.post("/api/getProject", getProject)
 router.post("/api/createProject", validateSession, createProject)
 router.post("/api/editProject", validateSession, editProject)
 router.post("/api/deleteProject", validateSession, deleteProject)
+
+// Site info routes
+
+router.get("/api/getAbout", getAboutInfo)
+router.post("/api/setAbout", validateSession, setAboutInfo)
+
+router.get("/api/getSocials", getSocials)
+router.post("/api/createSocial", validateSession, createSocial)
+router.post("/api/editSocial", validateSession, editSocial)
+router.post("/api/deleteSocial", validateSession, deleteSocial)
+
+
+// Upload routes
+
+router.get("/api/uploads/:fileId", getFile)
+router.get("/api/getUploads", validateSession, getUploads)
+router.post("/api/upload", validateSession, uploadMiddleware, uploadFile)
+router.post("/api/deleteUpload", validateSession, deleteFile)
 

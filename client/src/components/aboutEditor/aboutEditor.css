@@ -1,0 +1,27 @@
+.aboutEditor {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.aboutEditor input {
+    width: 100%;
+}
+
+.aboutEditor button {
+    width: 14rem;
+    height: 2rem;
+}
+
+textarea {
+    background-color: var(--bg-light);
+    border: 5px ridge var(--highlight);
+    color: var(--text);
+    max-width: 100%;
+    width: 100%;
+    height: 3rem;
+    margin: 5px;
+}

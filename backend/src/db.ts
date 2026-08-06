@@ -11,4 +11,39 @@ const adapter = new PrismaMariaDb({
 });
 const prisma = new PrismaClient({ adapter });
 
+// Init
+await prisma.about.upsert({
+    where: { id: "title" },
+    update: {},
+    create: {
+        id: "title",
+        data: "website"
+    }
+})
+await prisma.about.upsert({
+    where: { id: "about" },
+    update: {},
+    create: {
+        id: "about",
+        data: "Hello this is my website!"
+    }
+})
+await prisma.about.upsert({
+    where: { id: "email" },
+    update: {},
+    create: {
+        id: "email",
+        data: "john.does@example.com"
+    }
+})
+
+await prisma.about.upsert({
+    where: { id: "pfpUrl" },
+    update: {},
+    create: {
+        id: "pfpUrl",
+        data: "/favicon.ico"
+    }
+})
+
 export { prisma };

@@ -1,7 +1,7 @@
 .collapseableCard {
     margin: 10px;
     width: 95%;
-    border: 10px ridge var(--highlight);
+    border: 6px ridge var(--highlight);
     backdrop-filter: blur(15px);
 }
 

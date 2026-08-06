@@ -1,5 +1,5 @@
-import { prisma } from "../db";
-const argon2 = require("argon2");
+import { prisma } from "../db.js";
+import argon2 from "argon2";
 import { Request, Response } from "express";
 
 export interface LoginResponse {
@@ -35,19 +35,23 @@ export async function logout(token: string) {
 
 
 export async function handleLogout(req: Request, res: Response) {
-    const storedToken = req.cookies.sessionToken || null;
-    if (storedToken) {
-        logout(storedToken)
-        return res.sendStatus(200)
-    } else {
-        return res.sendStatus(400)
+    try {
+        const storedToken = req.cookies.sessionToken || null;
+        if (storedToken) {
+            await logout(storedToken)
+            return res.sendStatus(200)
+        } else {
+            return res.sendStatus(400)
+        }
+    } catch {
+        res.sendStatus(500)
     }
 }
 
 export async function loginAdmin(username: string, password: string, agent_text: string | undefined): Promise<LoginResponse> {
     const validPasswordHash = process.env.ADMIN_PASSWORD
     const validUsername = process.env.ADMIN_USERNAME
-    if (argon2.verify(validPasswordHash, password) && validUsername == username) {
+    if (await argon2.verify(validPasswordHash || "", password) && validUsername == username) {
         const chars: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         let token: string = "";
         for (let i: number = 0; i < chars.length; i++) {
@@ -66,20 +70,24 @@ export async function loginAdmin(username: string, password: string, agent_text:
 }
 
 export async function handleLogin(req: Request, res: Response) {
-    if (req.body.username && req.body.password) {
-        const loginResult = await loginAdmin(req.body.username, req.body.password, req.headers["user-agent"])
-        if (loginResult.token) {
-            res.cookie("sessionToken", loginResult.token, {
-                httpOnly: true,
-                secure: false,
-                sameSite: "lax",
-                maxAge: 1000 * 60 * 60 * 24 // 1 day
-            });
-            return res.sendStatus(200)
-        } else {
-            return res.sendStatus(401)
+    try {
+        if (req.body.username && req.body.password) {
+            const loginResult = await loginAdmin(req.body.username, req.body.password, req.headers["user-agent"])
+            if (loginResult.token) {
+                res.cookie("sessionToken", loginResult.token, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "lax",
+                    maxAge: 1000 * 60 * 60 * 24 // 1 day
+                });
+                return res.sendStatus(200)
+            } else {
+                return res.sendStatus(401)
+            }
         }
+        return res.sendStatus(400)
+    } catch {
+        res.sendStatus(500)
     }
-    return res.sendStatus(400)
 }
 

@@ -21,3 +21,22 @@ model projects {
   public           Boolean       @db.TinyInt @default(false)
   dateOfCreation   DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
+
+model about{
+  id              String         @id @db.VarChar(255)
+  data            String         @db.Text
+}
+
+model socials{
+  id               Int           @id @default(autoincrement())
+  name             String        @db.Text
+  url              String        @db.Text
+  iconUrl          String        @db.Text
+}
+
+model uploads{
+  id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
+  filename         String        @db.Text
+  mimeType         String        @db.Text
+  dateOfUpload     DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+}
