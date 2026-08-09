@@ -28,7 +28,23 @@
     transition: .1s ease-in;
 }
 
+.mobileNavigation a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--text);
+    margin: 10px;
+    transition: .1s ease-in;
+}
+
 .navigationGroup a:hover {
+    scale: 1.1;
+    background: var(--highlight-gradient);
+    background-clip: text;
+    color: transparent;
+    transition: .1s ease-in;
+}
+
+.mobileNavigation a:hover {
     scale: 1.1;
     background: var(--highlight-gradient);
     background-clip: text;
@@ -42,4 +58,45 @@
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.collapseNavButton img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.collapseNavButton {
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width:750px) {
+    .navigationGroup {
+        display: none;
+    }
+
+    .mobileNavigation {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: color-mix(in srgb, var(--bg-dark) 45%, rgba(0, 0, 0, 0) 25%);
+        backdrop-filter: blur(5px);
+        border: 0;
+        border-bottom: 5px;
+        border-style: ridge;
+        border-image: var(--highlight-gradient) 1;
+        animation: showMobileNavigation 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+}
+
+@keyframes showMobileNavigation {
+    from {
+        height: 0%;
+    }
+
+    to {
+        height: initial;
+    }
 }
