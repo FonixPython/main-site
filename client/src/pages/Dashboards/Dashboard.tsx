@@ -1,13 +1,13 @@
 import "./Dashboard.css"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { NavBar } from "../components/navbar/navbar";
-import { CollapseableCard } from "../components/collapseableCard/collapseableCard";
-import { DashboardProjectCard } from "../components/dashboardProjectCard/dashboardProjectCard";
-import { SocialEditorCard } from "../components/socialEditorCard/socialEditorCard";
-import { FileCard } from "../components/fileCard/fileCard";
-import { AboutEditor } from "../components/aboutEditor/aboutEditor";
-import { LoginPage } from "./Login";
+import { NavBar } from "../../components/navbar/navbar";
+import { CollapseableCard } from "../../components/collapseableCard/collapseableCard";
+import { DashboardProjectCard } from "../../components/dashboardProjectCard/dashboardProjectCard";
+import { SocialEditorCard } from "../../components/socialEditorCard/socialEditorCard";
+import { FileCard } from "../../components/fileCard/fileCard";
+import { AboutEditor } from "../../components/aboutEditor/aboutEditor";
+import { LoginPage } from "../Login/Login";
 
 
 
@@ -146,6 +146,40 @@ export function Dashboard() {
         reloadUploads()
     }, [])
 
+    const [selectedImage, setSelectedImage] = useState(null)
+    const [galleryImages, setGalleryImages] = useState([])
+
+
+    async function uploadImage(e) {
+        e.preventDefault()
+        if (!selectedImage) {
+            alert("Please select a file first.");
+            return;
+        }
+        const formData = new FormData()
+        formData.append("file", selectedImage)
+        formData.append("description", "")
+        formData.append("tags", JSON.stringify([]))
+        formData.append("public", "false")
+
+        try {
+            const result = await fetch("/api/uploadImage", {
+                method: "POST",
+                body: formData
+            })
+            if (result.status == 200) {
+                setSelectedFile(null)
+                e.target.reset()
+                reloadUploads()
+            } else {
+                alert("Failed to upload!")
+                return
+            }
+        } catch {
+            alert("Failed to upload!")
+        }
+    }
+
     return (
         <main className="dashboard">
             <NavBar>
@@ -156,6 +190,12 @@ export function Dashboard() {
                 <CollapseableCard title="Projects">
                     <button onClick={newProject} style={{ width: "95%", marginTop: "10px" }}>Create new project</button>
                     {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
+                </CollapseableCard>
+                <CollapseableCard title="Gallery">
+                    <form onSubmit={uploadImage}>
+                        <input type="file" name="file" onChange={(e) => setSelectedImage(e.target.files[0])} />
+                        <input type="submit" value="Upload" />
+                    </form>
                 </CollapseableCard>
                 <CollapseableCard title="Uploads">
                     <form onSubmit={uploadFile}>

@@ -40,3 +40,17 @@ model uploads{
   mimeType         String        @db.Text
   dateOfUpload     DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
+
+model gallery{
+  id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
+  imageId          String        @db.Text
+  lowresImageId    String        @db.Text
+  description      String        @db.Text
+  exifData         String        @db.Text
+  tags             String        @db.Text
+  clicks           Int           @db.Int @default(0)
+  downloads        Int           @db.Int @default(0)
+  dateOfCreation   DateTime      @db.Timestamp
+  dateOfUpload     DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+  public           Boolean       @db.TinyInt @default(false)
+}

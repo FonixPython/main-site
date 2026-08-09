@@ -5,6 +5,8 @@ import { handleLogin, handleLogout, handleTokenVerify } from './controllers/logi
 import { getProjects, getProject, createProject, editProject, deleteProject, getPublicProjects } from './controllers/project.js';
 import { getAboutInfo, setAboutInfo, getSocials, createSocial, editSocial, deleteSocial } from './controllers/about.js';
 import { uploadMiddleware, uploadFile, getFile, deleteFile, getUploads } from './controllers/upload.js';
+import { getPublicImages, downloadImage, registerClick, getAllImages, uploadImage, deleteImage, editImage } from './controllers/gallery.js';
+import { verify } from 'node:crypto';
 export const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
@@ -44,3 +46,12 @@ router.get("/api/getUploads", validateSession, getUploads)
 router.post("/api/upload", validateSession, uploadMiddleware, uploadFile)
 router.post("/api/deleteUpload", validateSession, deleteFile)
 
+// Gallery routes
+
+router.get("/api/getPublicImages", getPublicImages)
+router.get("/api/downloadImage/:imageId", downloadImage)
+router.get("/api/registerClick", registerClick)
+router.get("/api/getAllImages", validateSession, getAllImages)
+router.post("/api/uploadImage", validateSession, uploadMiddleware, uploadImage)
+router.post("/api/deleteImage", validateSession, deleteImage)
+router.post("/api/editImage", validateSession, editImage)
