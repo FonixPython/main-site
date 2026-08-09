@@ -5,10 +5,11 @@ import { NavBar } from "../../components/navbar/navbar";
 import { CollapseableCard } from "../../components/collapseableCard/collapseableCard";
 import { DashboardProjectCard } from "../../components/dashboardProjectCard/dashboardProjectCard";
 import { SocialEditorCard } from "../../components/socialEditorCard/socialEditorCard";
+import { DashboardImageCard } from "../../components/dashboardImageCard/dashboardImageCard";
 import { FileCard } from "../../components/fileCard/fileCard";
 import { AboutEditor } from "../../components/aboutEditor/aboutEditor";
 import { LoginPage } from "../Login/Login";
-
+import { Footer } from "../../components/footer/footer";
 
 
 
@@ -178,7 +179,18 @@ export function Dashboard() {
         } catch {
             alert("Failed to upload!")
         }
+        reloadGalleryImages()
     }
+
+    async function reloadGalleryImages() {
+        const result = await fetch("/api/getAllImages")
+        const jsonResult = await result.json()
+        setGalleryImages(jsonResult)
+    }
+
+    useEffect(() => {
+        reloadGalleryImages()
+    }, [])
 
     return (
         <main className="dashboard">
@@ -196,6 +208,9 @@ export function Dashboard() {
                         <input type="file" name="file" onChange={(e) => setSelectedImage(e.target.files[0])} />
                         <input type="submit" value="Upload" />
                     </form>
+                    {galleryImages.map((image) => (
+                        <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} />
+                    ))}
                 </CollapseableCard>
                 <CollapseableCard title="Uploads">
                     <form onSubmit={uploadFile}>

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import path, { parse } from "path";
 import ExifReader from 'exifreader';
 import sharp from "sharp";
+import { json } from "stream/consumers";
 
 interface imageData {
     imageId: string,
@@ -187,6 +188,22 @@ export async function editImage(req: Request, res: Response) {
         }
     } catch (e) {
         console.log(e)
+        return res.sendStatus(500)
+    }
+}
+
+export async function getAllTags(req: Request, res: Response) {
+    try {
+        const tagArray: string[] = []
+        const publicImages = await prisma.gallery.findMany({ where: { public: true } })
+        publicImages.map((image) => {
+            const imageTagArray = JSON.parse(image.tags)
+            imageTagArray.map((tag: string) => {
+                if (!tagArray.includes(tag)) { tagArray.push(tag) }
+            })
+        })
+        res.json(tagArray).status(200)
+    } catch {
         return res.sendStatus(500)
     }
 }

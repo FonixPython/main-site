@@ -23,7 +23,7 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  background-image: url("./assets/bg.png");
+  background-image: url("./assets/bg.webp");
   background-repeat: repeat-y;
   background-size: cover;
   background-attachment: fixed;
@@ -35,8 +35,8 @@ h2 {
 }
 
 button {
-  padding: 20px 10px;
-  margin:5px;
+  padding: 10px 5px;
+  margin: 5px;
   color: var(--text);
   background-color: var(--bg-dark);
   display: flex;

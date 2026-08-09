@@ -25,6 +25,7 @@
     text-decoration: none;
     color: var(--text);
     margin: 10px;
+    transition: .1s ease-in;
 }
 
 .navigationGroup a:hover {

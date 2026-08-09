@@ -22,11 +22,7 @@ export function Index() {
 
     return (
         <main>
-            <NavBar id="home">
-                <a href="#home">Home</a>
-                <a href="#projects">Projects</a>
-                <a href="#about">About</a>
-            </NavBar>
+            <NavBar id="home"></NavBar>
             <Hero></Hero>
             <div className="cardSection">
                 <h2 id="projects">My <span className="highlighted">projects</span></h2>
