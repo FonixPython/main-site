@@ -106,7 +106,7 @@ export async function uploadImage(req: Request, res: Response) {
                 }),
                 tags: req.body.tags || "[]",
                 dateOfCreation: new Date(),
-                public: req.body.public
+                public: req.body.public == "true"
             }
             const exifTags = await ExifReader.load(originaImageFilePath)
             if (exifTags !== undefined) {
