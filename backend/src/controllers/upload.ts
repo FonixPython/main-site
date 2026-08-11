@@ -89,7 +89,7 @@ export async function deleteFile(req: Request, res: Response) {
 
 export async function getUploads(req: Request, res: Response) {
     try {
-        const result = await prisma.uploads.findMany()
+        const result = await prisma.uploads.findMany({ orderBy: { dateOfUpload: "desc" } })
         if (result) {
             return res.json(result).status(200)
         } else {

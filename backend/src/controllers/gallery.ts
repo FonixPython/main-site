@@ -106,7 +106,7 @@ export async function uploadImage(req: Request, res: Response) {
                 }),
                 tags: req.body.tags || "[]",
                 dateOfCreation: new Date(),
-                public: req.body.public === "true"
+                public: req.body.public
             }
             const exifTags = await ExifReader.load(originaImageFilePath)
             if (exifTags !== undefined) {
@@ -175,7 +175,7 @@ export async function editImage(req: Request, res: Response) {
             const updatedObject = {
                 description: req.body.description || currentResult.description,
                 tags: JSON.stringify(req.body.tags) || currentResult.tags,
-                public: req.body.public || currentResult.public
+                public: req.body.public
             }
             const updatedResult = await prisma.gallery.update({ where: { id: req.body.id }, data: updatedObject })
             if (updatedObject) {

@@ -50,7 +50,7 @@ router.post("/api/deleteUpload", validateSession, deleteFile)
 
 router.get("/api/getPublicImages", getPublicImages)
 router.get("/api/downloadImage/:imageId", downloadImage)
-router.get("/api/registerClick", registerClick)
+router.post("/api/registerClick", registerClick)
 router.get("/api/getAllImages", validateSession, getAllImages)
 router.post("/api/uploadImage", validateSession, uploadMiddleware, uploadImage)
 router.post("/api/deleteImage", validateSession, deleteImage)

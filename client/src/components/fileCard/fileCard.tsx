@@ -7,7 +7,7 @@ export function FileCard(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({id:props.file.id})
+            body: JSON.stringify({ id: props.file.id })
         })
         if ((result.status == 200) && props.deletionCallback) {
             props.deletionCallback()
@@ -16,7 +16,7 @@ export function FileCard(props) {
 
     return (
         <div className="fileCard">
-            <p>/api/uploads/{props.file.id}</p>
+            <p><a href={"/api/uploads/" + props.file.id}>/api/uploads/{props.file.id}</a></p>
             <p>{props.file.filename}</p>
             <button onClick={deleteUpload}>Delete</button>
         </div>
