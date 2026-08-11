@@ -61,6 +61,8 @@ export function DashboardImageCard(props) {
                             setTagInputVisible(true)
                         }
                     }}>{tagInputVisible ? "Add" : "+"}</button>
+                    <button onClick={() => { props.copyTags(image.tags) }}>Copy all</button>
+                    <button onClick={() => { setImage(prev => ({ ...prev, tags: [...image.tags, ...props.copiedTags] })) }}>Paste</button>
                 </div>
                 <div className="linearContainer">
                     <p>Public:</p>

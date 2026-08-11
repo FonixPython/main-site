@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { prisma } from "../db.js";
-import { IDLE_BLOCKER } from "react-router-dom";
 
 
 export async function getAboutInfo(req: Request, res: Response) {

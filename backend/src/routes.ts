@@ -6,7 +6,7 @@ import { getProjects, getProject, createProject, editProject, deleteProject, get
 import { getAboutInfo, setAboutInfo, getSocials, createSocial, editSocial, deleteSocial } from './controllers/about.js';
 import { uploadMiddleware, uploadFile, getFile, deleteFile, getUploads } from './controllers/upload.js';
 import { getPublicImages, downloadImage, registerClick, getAllImages, uploadImage, deleteImage, editImage, getAllTags } from './controllers/gallery.js';
-import { verify } from 'node:crypto';
+
 export const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
