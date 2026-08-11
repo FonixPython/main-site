@@ -1,9 +1,9 @@
 import { prisma } from "../db.js";
 import { Request, Response } from "express";
-import path, { parse } from "path";
+import path from "path";
 import ExifReader from 'exifreader';
 import sharp from "sharp";
-import { json } from "stream/consumers";
+import fs from "fs/promises";
 
 interface imageData {
     imageId: string,
@@ -17,7 +17,7 @@ interface imageData {
 
 export async function getPublicImages(req: Request, res: Response) {
     try {
-        const result = await prisma.gallery.findMany({ where: { public: true } })
+        const result = await prisma.gallery.findMany({ where: { public: true }, orderBy: { dateOfCreation: "desc" } })
         if (result) {
             return res.json(result).status(200)
         }
@@ -62,7 +62,7 @@ export async function registerClick(req: Request, res: Response) {
 
 export async function getAllImages(req: Request, res: Response) {
     try {
-        const result = await prisma.gallery.findMany()
+        const result = await prisma.gallery.findMany({ orderBy: { dateOfUpload: "desc" } })
         return res.json(result).status(200)
     } catch (e) {
         console.log(e)
@@ -154,6 +154,11 @@ export async function deleteImage(req: Request, res: Response) {
     try {
         if (req.body.id) {
             const result = await prisma.gallery.delete({ where: { id: req.body.id } })
+            const fullResult = await prisma.uploads.delete({ where: { id: result.imageId } })
+            await fs.unlink(path.join(process.env.UPLOAD_PATH ?? './uploads/', fullResult.filename));
+            const lowResult = await prisma.uploads.delete({ where: { id: result.lowresImageId } })
+            await fs.unlink(path.join(process.env.UPLOAD_PATH ?? './uploads/', lowResult.filename));
+
             if (result) {
                 return res.sendStatus(200)
             } else {

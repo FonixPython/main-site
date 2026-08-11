@@ -1,9 +1,7 @@
-import { Prisma } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 import path from "path"
 import { prisma } from "../db.js";
-import { resume } from "react-dom/server";
 import fs from "fs/promises";
 
 const storage = multer.diskStorage({

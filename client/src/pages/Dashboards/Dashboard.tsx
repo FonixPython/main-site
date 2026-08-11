@@ -9,8 +9,6 @@ import { DashboardImageCard } from "../../components/dashboardImageCard/dashboar
 import { FileCard } from "../../components/fileCard/fileCard";
 import { AboutEditor } from "../../components/aboutEditor/aboutEditor";
 import { LoginPage } from "../Login/Login";
-import { Footer } from "../../components/footer/footer";
-
 
 
 export function Dashboard() {
@@ -110,6 +108,8 @@ export function Dashboard() {
 
     const [uploads, setUploads] = useState([])
     const [selectedFile, setSelectedFile] = useState(null);
+    const [copiedTags, setCopiedTags] = useState([])
+
     async function reloadUploads() {
         const result = await fetch("/api/getUploads")
         const jsonResult = await result.json()
@@ -119,7 +119,6 @@ export function Dashboard() {
     async function uploadFile(e) {
         e.preventDefault()
         if (!selectedFile) {
-            alert("Please select a file first.");
             return;
         }
         const formData = new FormData()
@@ -147,38 +146,39 @@ export function Dashboard() {
         reloadUploads()
     }, [])
 
-    const [selectedImage, setSelectedImage] = useState(null)
+    const [selectedImages, setSelectedImages] = useState(null)
     const [galleryImages, setGalleryImages] = useState([])
 
 
     async function uploadImage(e) {
         e.preventDefault()
-        if (!selectedImage) {
-            alert("Please select a file first.");
-            return;
-        }
-        const formData = new FormData()
-        formData.append("file", selectedImage)
-        formData.append("description", "")
-        formData.append("tags", JSON.stringify([]))
-        formData.append("public", "false")
+        if (selectedImages.length == 0) { return; }
 
-        try {
-            const result = await fetch("/api/uploadImage", {
-                method: "POST",
-                body: formData
-            })
-            if (result.status == 200) {
-                setSelectedFile(null)
-                e.target.reset()
-                reloadUploads()
-            } else {
+        for (let i = 0; i < selectedImages.length; i++) {
+            const formData = new FormData()
+            formData.append("file", selectedImages[i])
+            formData.append("description", "")
+            formData.append("tags", JSON.stringify([]))
+            formData.append("public", "false")
+
+            try {
+                const result = await fetch("/api/uploadImage", {
+                    method: "POST",
+                    body: formData
+                })
+                if (result.status == 200) {
+                    setSelectedFile(null)
+                    reloadUploads()
+                } else {
+                    alert("Failed to upload!")
+                }
+            } catch (e) {
+                console.log(e)
                 alert("Failed to upload!")
-                return
             }
-        } catch {
-            alert("Failed to upload!")
         }
+        e.target.reset()
+        alert("Uploaded successfully!")
         reloadGalleryImages()
     }
 
@@ -205,11 +205,11 @@ export function Dashboard() {
                 </CollapseableCard>
                 <CollapseableCard title="Gallery">
                     <form onSubmit={uploadImage}>
-                        <input type="file" name="file" onChange={(e) => setSelectedImage(e.target.files[0])} />
+                        <input type="file" name="file" onChange={(e) => setSelectedImages(e.target.files)} multiple />
                         <input type="submit" value="Upload" />
                     </form>
                     {galleryImages.map((image) => (
-                        <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} />
+                        <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} key={image.id} copyTags={setCopiedTags} copiedTags={copiedTags} />
                     ))}
                 </CollapseableCard>
                 <CollapseableCard title="Uploads">
@@ -217,13 +217,13 @@ export function Dashboard() {
                         <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
                         <input type="submit" value="Upload" />
                     </form>
-                    {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} />))}
+                    {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} key={upload.id} />))}
                 </CollapseableCard>
                 <CollapseableCard title="About section">
                     <AboutEditor />
                     <CollapseableCard title="Socials">
                         <button onClick={addSocial} style={{ width: "95%", marginTop: "10px" }}>Add social platform link</button>
-                        {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} />))}
+                        {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} key={social.id} />))}
                     </CollapseableCard>
                 </CollapseableCard>
             </div>}
