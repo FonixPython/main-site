@@ -1,0 +1,53 @@
+.socialEditorCard {
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--bg-dark);
+    border: 5px ridge var(--text);
+    width: 95%;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.socialEditorCard img {
+    height: 90%;
+    width: auto;
+}
+
+.socialEditorCard input {
+    height: 1.5rem;
+    border-width: 5px;
+    margin: 5px;
+}
+
+.socialEditorCard button {
+    height: 1rem;
+    border-width: 5px;
+    border-style: ridge;
+    margin: 5px;
+}
+
+.socialEditorCard a {
+    text-decoration: none;
+}
+
+.socialEditorCard a div {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-dark);
+    border: 5px ridge var(--highlight);
+    margin: 10px;
+    padding: 5px;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.socialEditorCard .socialChanger {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 10px;
+}

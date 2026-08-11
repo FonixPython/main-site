@@ -1,0 +1,66 @@
+.pageContainer {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.pageContainer h1 {
+    margin-top: 10px;
+    margin-bottom: auto;
+}
+
+.loginBox form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: auto;
+}
+
+input {
+    font-size: 1rem;
+    border: 5px ridge var(--highlight);
+    padding: 5px;
+    margin: 5px;
+    background-color: var(--bg-light);
+    color: var(--text);
+}
+
+.submitButton {
+    width: 95%;
+    height: 3rem;
+    color: var(--text);
+    background-color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin-top: auto;
+    border: 2px solid var(--highlight);
+    border-radius: 0;
+}
+
+.submitButton:hover {
+    border-image: var(--highlight-gradient) 1;
+}
+
+.submitButton:active {
+    background: var(--highlight-gradient);
+    transition: .5s;
+}
+
+.loginBox {
+    height: 400px;
+    width: 300px;
+    border: 10px ridge var(--highlight);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-dark);
+}

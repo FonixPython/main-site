@@ -1,0 +1,37 @@
+DashboardProjectCard {
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dashboard .logoutButton {
+    width: 5rem;
+    height: 2rem;
+    color: var(--text);
+    background-color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin-top: auto;
+    border: 2px solid var(--highlight);
+}
+
+.dashboard .logoutButton:hover {
+    border-color: var(--danger);
+}
+
+.dashboard .logoutButton:active{
+    background-color: var(--danger);
+}
+
+.dashboardContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboardContent CollapseableCard {
+    margin: 10px;
+}
