@@ -272,4 +272,8 @@
     .screenCover .viewer .content img {
         max-height: 100%;
     }
+
+    .gallery .sideBar {
+        position: relative;
+    }
 }
