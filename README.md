@@ -16,7 +16,6 @@ Source code for my personal website!
 
 ## Tech stack:
 - Node.js
-- React
-- React router
-
-While the current feature set doesn't at all require the use of a javascript ui library, I never used React before this and since I plan on making features that could benefit from reusable components I though why shouldn't I spend a bit of extra time at the beginning of the project to learn the basics of it!
+- Express.js
+- Prisma ORM
+- React + React Router Dom
