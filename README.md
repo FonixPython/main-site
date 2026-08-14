@@ -8,10 +8,10 @@ Source code for my personal website!
 - Hero with an animated piece of text
 - A collection of my most recent projects in cards
 - About me section, with a couple of link to my socials
+- Everything is dynamically rendered from a backend with a databse
+- Gallery section with a working tagging system and metadata extraction, uploads done from a dashboard
 
 ## Planned features
-- Backend with dashboard using Prisma and MySQL for the database, since everything being static on the site is kind of boring
-- A gallery section where I can show off my photography, with a tagging system
 - Some kind of blog so I can write about my projects/ make guides for my friends
 
 ## Tech stack:
