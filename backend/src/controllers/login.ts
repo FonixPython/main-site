@@ -78,7 +78,7 @@ export async function handleLogin(req: Request, res: Response) {
                     httpOnly: true,
                     secure: false,
                     sameSite: "lax",
-                    maxAge: 1000 * 60 * 60 * 24 // 1 day
+                    maxAge: 1000 * 60 * 60 * 24 * 90
                 });
                 return res.sendStatus(200)
             } else {
