@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react"
+import { useNavigate } from "react-router-dom";
 import React from "react"
 import "./sidebarDashboard.css"
 
@@ -10,19 +11,29 @@ export function SidebarDashboard({ children }: React.PropsWithChildren) {
         .filter(React.isValidElement<DashPageInterface>)
         .map((element) => ({
             title: element.props.title,
-            iconPath: element.props.iconPath,
+            icon: element.props.icon,
             children: element.props.children,
         }));
+
+    const navigate = useNavigate();
+
+    async function logout() {
+        const result = await fetch("/api/logout")
+        if (result.status == 200) {
+            navigate("/")
+        }
+    }
 
     return (
         <div className="sidebarDashboard">
             <div className="sideBar">
                 {pages.map((page, index) => (
                     <button className={index == selectedIndex ? "selectedPage" : ""} onClick={() => { setSelectedIndex(index) }} key={page.title}>
-                        <img src={page.iconPath} alt="Page icon" />
+                        {page.icon}
                         <p>{page.title}</p>
                     </button>
                 ))}
+                <button onClick={logout} className="logoutButton">Logout</button>
             </div>
             <div className="pageContent">
                 {pages[selectedIndex]?.children}
@@ -33,12 +44,11 @@ export function SidebarDashboard({ children }: React.PropsWithChildren) {
 
 interface DashPageInterface {
     title: string,
-    iconPath: string,
+    icon: ReactNode,
     children: ReactNode
 }
 
-export function DashPage({ title, iconPath, children }: DashPageInterface) {
-    console.log(title)
-    console.log(iconPath)
+export function DashPage({ title, icon, children }: DashPageInterface) {
+    console.log(title, icon)
     return children
 }

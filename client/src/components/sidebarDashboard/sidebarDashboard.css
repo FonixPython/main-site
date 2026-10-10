@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: row;
     height: 100%;
+    width: 100%;
 }
 
 .sidebarDashboard .sideBar {
-    min-width: 200px;
+    width: 200px;
     border: 0;
     border-right: 2px;
     border-image: var(--highlight-gradient-horizontal) 1;
@@ -42,6 +43,16 @@
 }
 
 .sidebarDashboard .pageContent {
-    width: 100%;
+    width: calc(100% - 200px);
     min-height: 100%;
+    padding: 10px;
+    backdrop-filter: blur(20px);
+    overflow: scroll;
+    padding-bottom: 100px;
+}
+
+.sidebarDashboard .sideBar .logoutButton {
+    bottom: 0;
+    position: absolute;
+    width: 200px;
 }

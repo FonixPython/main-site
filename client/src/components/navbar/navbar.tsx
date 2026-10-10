@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import "./navbar.css"
 import { Link } from "react-router-dom"
 import { HashLink } from 'react-router-hash-link'
+import { Menu } from "pixelarticons/react"
 
 export function NavBar(props) {
     const MOBILE_WIDTH = 750
@@ -35,7 +36,7 @@ export function NavBar(props) {
                     <HashLink smooth to="/#about">About</HashLink>
                 </div>
                 <div style={{ right: 0, margin: "10px", position: "fixed", height: "100%", display: "flex", alignItems: "center" }}>
-                    {isMobile && <button className="collapseNavButton" onClick={() => { setOpened(!opened) }}><img src="menu.webp" alt="Hamburger menu icon" /></button>}
+                    {isMobile && <button className="collapseNavButton" onClick={() => { setOpened(!opened) }}><Menu /></button>}
                     {!isMobile && props.children}
                 </div>
             </div>

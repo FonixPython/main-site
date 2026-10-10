@@ -30,6 +30,7 @@
     "exifreader": "^4.42.0",
     "express": "^5.2.1",
     "multer": "^2.2.0",
+    "pixelarticons": "^2.4.2",
     "prisma": "^7.9.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

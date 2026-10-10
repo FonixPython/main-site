@@ -19,6 +19,7 @@ html {
   font-weight: 100;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -37,7 +38,6 @@ h2 {
 
 button {
   padding: 10px 5px;
-  margin: 5px;
   color: var(--text);
   background-color: var(--bg-dark);
   display: flex;
@@ -46,6 +46,7 @@ button {
   align-self: center;
   margin-top: auto;
   border: 2px solid var(--highlight);
+  transition: 0.5s;
 }
 
 button:hover {
@@ -54,7 +55,6 @@ button:hover {
 
 button:active {
   background: var(--highlight-gradient);
-  transition: .5s;
 }
 
 .highlighted {

@@ -1,9 +1,9 @@
 .dashboardProjectCard {
     display: flex;
     background-color: var(--bg-dark);
-    border: 5px ridge var(--text);
-    width: 95%;
-    margin: 10px;
+    border: 0;
+    border-bottom: 5px ridge var(--text);
+    width: 100%;
 }
 
 .dashboardProjectCard ProjectCard {
