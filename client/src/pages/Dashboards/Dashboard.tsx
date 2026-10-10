@@ -9,6 +9,7 @@ import { DashboardImageCard } from "../../components/dashboardImageCard/dashboar
 import { FileCard } from "../../components/fileCard/fileCard";
 import { AboutEditor } from "../../components/aboutEditor/aboutEditor";
 import { LoginPage } from "../Login/Login";
+import { DashPage, SidebarDashboard } from "../../components/sidebarDashboard/sidebarDashboard";
 
 
 export function Dashboard() {
@@ -198,35 +199,37 @@ export function Dashboard() {
                 {isLoggedIn && <button onClick={logout} className="logoutButton">Logout</button>}
             </NavBar>
             {(isLoggedIn == false) && <LoginPage onLoggedIn={checkAuthState} />}
-            {isLoggedIn && <div className="dashboardContent">
-                <CollapseableCard title="Projects">
-                    <button onClick={newProject} style={{ width: "95%", marginTop: "10px" }}>Create new project</button>
-                    {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
-                </CollapseableCard>
-                <CollapseableCard title="Gallery">
-                    <form onSubmit={uploadImage}>
-                        <input type="file" name="file" onChange={(e) => setSelectedImages(e.target.files)} multiple />
-                        <input type="submit" value="Upload" />
-                    </form>
-                    {galleryImages.map((image) => (
-                        <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} key={image.id} copyTags={setCopiedTags} copiedTags={copiedTags} />
-                    ))}
-                </CollapseableCard>
-                <CollapseableCard title="Uploads">
-                    <form onSubmit={uploadFile}>
-                        <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
-                        <input type="submit" value="Upload" />
-                    </form>
-                    {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} key={upload.id} />))}
-                </CollapseableCard>
-                <CollapseableCard title="About section">
-                    <AboutEditor />
-                    <CollapseableCard title="Socials">
-                        <button onClick={addSocial} style={{ width: "95%", marginTop: "10px" }}>Add social platform link</button>
-                        {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} key={social.id} />))}
-                    </CollapseableCard>
-                </CollapseableCard>
-            </div>}
+
+            {isLoggedIn &&
+                <SidebarDashboard>
+                    <DashPage title="Projects" iconPath="/dropDown.png">
+                        <button onClick={newProject} style={{ width: "95%", marginTop: "10px" }}>Create new project</button>
+                        {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
+                    </DashPage>
+                    <DashPage title="Gallery" iconPath="/dropDown.png">
+                        <form onSubmit={uploadImage}>
+                            <input type="file" name="file" onChange={(e) => setSelectedImages(e.target.files)} multiple />
+                            <input type="submit" value="Upload" />
+                        </form>
+                        {galleryImages.map((image) => (
+                            <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} key={image.id} copyTags={setCopiedTags} copiedTags={copiedTags} />
+                        ))}
+                    </DashPage>
+                    <DashPage title="Uploads" iconPath="/dropDown.png">
+                        <form onSubmit={uploadFile}>
+                            <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
+                            <input type="submit" value="Upload" />
+                        </form>
+                        {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} key={upload.id} />))}
+                    </DashPage>
+                    <DashPage title="About" iconPath="/dropDown.png">
+                        <AboutEditor />
+                        <CollapseableCard title="Socials">
+                            <button onClick={addSocial} style={{ width: "95%", marginTop: "10px" }}>Add social platform link</button>
+                            {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} key={social.id} />))}
+                        </CollapseableCard>
+                    </DashPage>
+                </SidebarDashboard>}
         </main>
     )
 }

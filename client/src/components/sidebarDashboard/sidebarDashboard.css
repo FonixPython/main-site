@@ -1,0 +1,47 @@
+.sidebarDashboard {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.sidebarDashboard .sideBar {
+    min-width: 200px;
+    border: 0;
+    border-right: 2px;
+    border-image: var(--highlight-gradient-horizontal) 1;
+    border-style: solid;
+    background-color: var(--bg-dark);
+}
+
+.sidebarDashboard .sideBar button {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    transition: 0.1s ease-in;
+}
+
+.sidebarDashboard .sideBar button:hover {
+    border: 0;
+    border-right: 5px;
+    border-image: var(--highlight-gradient) 1;
+    border-style: solid;
+    background-color: var(--bg-light);
+}
+
+.sidebarDashboard .sideBar .selectedPage {
+    border: 0;
+    border-right: 5px;
+    border-image: var(--highlight-gradient) 1;
+    border-style: solid;
+    background-color: var(--bg-light);
+}
+
+.sidebarDashboard .pageContent {
+    width: 100%;
+    min-height: 100%;
+}
