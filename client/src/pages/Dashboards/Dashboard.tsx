@@ -19,7 +19,7 @@ export interface Project {
     imageUrl: string,
     shortDescription: string,
     github: string,
-    public: string,
+    public: boolean,
     dateOfCreation: string
 }
 
@@ -198,7 +198,7 @@ export function Dashboard() {
                 <SidebarDashboard>
                     <DashPage title="Projects" icon={<Package />}>
                         <button onClick={newProject} style={{ width: "100%", marginTop: "10px" }}>Create new project</button>
-                        {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
+                        {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} reloadProjects={reloadProjects} setModal={setModalContent} setModalOpened={setModalOpened} />))}
                     </DashPage>
                     <DashPage title="Gallery" icon={<Image />}>
                         <form onSubmit={uploadImage}>
