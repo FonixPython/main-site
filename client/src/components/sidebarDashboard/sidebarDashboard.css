@@ -53,6 +53,15 @@
 
 .sidebarDashboard .sideBar .logoutButton {
     bottom: 0;
-    position: absolute;
-    width: 200px;
+    width: 198px;
+    position: fixed;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.sidebarDashboard .sideBar .logoutButton:hover {
+    border: 0;
+    border-right: 5px solid var(--danger);
+    border-style: solid;
+    background-color: color-mix(in srgb, var(--bg-light) 100%, var(--danger) 50%);
 }

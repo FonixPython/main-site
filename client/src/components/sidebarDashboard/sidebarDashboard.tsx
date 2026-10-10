@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react"
 import { useNavigate } from "react-router-dom";
+import { Logout } from "pixelarticons/react";
 import React from "react"
 import "./sidebarDashboard.css"
 
@@ -33,7 +34,10 @@ export function SidebarDashboard({ children }: React.PropsWithChildren) {
                         <p>{page.title}</p>
                     </button>
                 ))}
-                <button onClick={logout} className="logoutButton">Logout</button>
+                <button onClick={logout} className="logoutButton">
+                    <Logout />
+                    <p>Logout</p>
+                </button>
             </div>
             <div className="pageContent">
                 {pages[selectedIndex]?.children}

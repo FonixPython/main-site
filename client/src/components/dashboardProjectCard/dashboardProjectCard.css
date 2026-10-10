@@ -2,8 +2,14 @@
     display: flex;
     background-color: var(--bg-dark);
     border: 0;
-    border-bottom: 5px ridge var(--text);
     width: 100%;
+    border: 3px ridge var(--highlight);
+    transition: 0.1s ease-in;
+    margin-top: 10px;
+}
+
+.dashboardProjectCard:hover {
+    background-color: var(--bg-light);
 }
 
 .dashboardProjectCard ProjectCard {

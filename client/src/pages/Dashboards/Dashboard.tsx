@@ -185,15 +185,13 @@ export function Dashboard() {
         reloadSocials();
         reloadUploads()
         reloadGalleryImages()
-    }, [])
-
+    }, [isLoggedIn])
 
     return (
         <main className="dashboard">
             <ModalWrapper isopen={modalOpened} setOpen={setModalOpened} title={modalContent.title} children={modalContent.children} />
             <NavBar></NavBar>
             {(isLoggedIn == false) && <LoginPage onLoggedIn={checkAuthState} />}
-
             {isLoggedIn &&
                 <SidebarDashboard>
                     <DashPage title="Projects" icon={<Package />}>

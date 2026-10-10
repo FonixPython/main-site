@@ -15,12 +15,15 @@
 .modalWrapper {
     min-width: 350px;
     background-color: var(--bg-light);
-    border: 2px solid var(--border);
-    border-radius: 10px;
+    border: 3px ridge var(--highlight);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     z-index: 1000;
+}
+
+.modalWrapper hr {
+    border-image: var(--highlight-gradient) 1;
 }
 
 .modalWrapper .titleBar {
@@ -37,12 +40,12 @@
     height: 30px;
     width: 30px;
     background-color: var(--bg-light);
-    border: 2px solid var(--border);
-    border-radius: 10px;
+    border: 0;
     transition: 0.1s ease-in;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 5px;
 }
 
 .modalWrapper .titleBar .closeButton:hover {
