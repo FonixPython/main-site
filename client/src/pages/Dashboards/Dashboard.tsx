@@ -12,6 +12,7 @@ import { DashPage, SidebarDashboard } from "../../components/sidebarDashboard/si
 import { Package, Image, Upload, CircleInfo } from "pixelarticons/react"
 import { ModalWrapper } from "../../components/ModalWrapper/ModalWrapper";
 import { CreateProjectModal } from "../../components/modals/Project";
+import { UploadImageModal } from "../../components/modals/Gallery";
 
 export interface Project {
     id: string,
@@ -135,42 +136,15 @@ export function Dashboard() {
             alert("Failed to upload!")
         }
     }
-
-    const [selectedImages, setSelectedImages] = useState([])
     const [galleryImages, setGalleryImages] = useState([])
 
 
-    async function uploadImage(e: React.SubmitEvent) {
-        e.preventDefault()
-        if (!e.target) { return }
-        if (selectedImages.length == 0) { return; }
-
-        for (let i = 0; i < selectedImages.length; i++) {
-            const formData = new FormData()
-            formData.append("file", selectedImages[i])
-            formData.append("description", "")
-            formData.append("tags", JSON.stringify([]))
-            formData.append("public", "false")
-
-            try {
-                const result = await fetch("/api/uploadImage", {
-                    method: "POST",
-                    body: formData
-                })
-                if (result.status == 200) {
-                    setSelectedFile(null)
-                    reloadUploads()
-                } else {
-                    alert("Failed to upload!")
-                }
-            } catch (e) {
-                console.log(e)
-                alert("Failed to upload!")
-            }
-        }
-        e.target.reset()
-        alert("Uploaded successfully!")
-        reloadGalleryImages()
+    async function uploadImage() {
+        setModalContent({
+            title: "Upload image",
+            children: <UploadImageModal reload={reloadGalleryImages} setModal={setModalContent} setModalOpened={setModalOpened} />
+        })
+        setModalOpened(true)
     }
 
     async function reloadGalleryImages() {
@@ -199,10 +173,7 @@ export function Dashboard() {
                         {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} reloadProjects={reloadProjects} setModal={setModalContent} setModalOpened={setModalOpened} />))}
                     </DashPage>
                     <DashPage title="Gallery" icon={<Image />}>
-                        <form onSubmit={uploadImage}>
-                            <input type="file" name="file" onChange={(e) => setSelectedImages(e.target.files)} multiple />
-                            <input type="submit" value="Upload" />
-                        </form>
+                        <button onClick={uploadImage} style={{ width: "100%", marginTop: "10px" }}>Upload image</button>
                         {galleryImages.map((image) => (
                             <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} key={image.id} copyTags={setCopiedTags} copiedTags={copiedTags} />
                         ))}

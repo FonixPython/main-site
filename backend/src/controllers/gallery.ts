@@ -197,10 +197,26 @@ export async function editImage(req: Request, res: Response) {
     }
 }
 
-export async function getAllTags(req: Request, res: Response) {
+export async function getPublicTags(req: Request, res: Response) {
     try {
         const tagArray: string[] = []
         const publicImages = await prisma.gallery.findMany({ where: { public: true } })
+        publicImages.map((image) => {
+            const imageTagArray = JSON.parse(image.tags)
+            imageTagArray.map((tag: string) => {
+                if (!tagArray.includes(tag)) { tagArray.push(tag) }
+            })
+        })
+        res.json(tagArray).status(200)
+    } catch {
+        return res.sendStatus(500)
+    }
+}
+
+export async function getAllTags(req: Request, res: Response) {
+    try {
+        const tagArray: string[] = []
+        const publicImages = await prisma.gallery.findMany()
         publicImages.map((image) => {
             const imageTagArray = JSON.parse(image.tags)
             imageTagArray.map((tag: string) => {

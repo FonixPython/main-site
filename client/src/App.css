@@ -10,6 +10,24 @@
   --danger: #FF383C;
 }
 
+@keyframes slide-from-right {
+  from {
+    transform: translateX(100vw);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: slide-from-;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -20,6 +38,7 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none;
 }
 
 body {
