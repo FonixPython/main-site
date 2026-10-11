@@ -6,7 +6,26 @@
   --text-muted: hsl(210, 50%, 84%);
   --highlight: #496297;
   --highlight-gradient: linear-gradient(to right, #8BDEDA, #43ADD0, #998EE0, #E17DC2, #EF9393);
+  --highlight-gradient-horizontal: linear-gradient(to bottom, #8BDEDA, #43ADD0, #998EE0, #E17DC2, #EF9393);
   --danger: #FF383C;
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(100vw);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: slide-from-;
 }
 
 html {
@@ -18,6 +37,8 @@ html {
   font-weight: 100;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  outline: none;
 }
 
 body {
@@ -36,7 +57,6 @@ h2 {
 
 button {
   padding: 10px 5px;
-  margin: 5px;
   color: var(--text);
   background-color: var(--bg-dark);
   display: flex;
@@ -45,6 +65,7 @@ button {
   align-self: center;
   margin-top: auto;
   border: 2px solid var(--highlight);
+  transition: 0.5s;
 }
 
 button:hover {
@@ -53,7 +74,6 @@ button:hover {
 
 button:active {
   background: var(--highlight-gradient);
-  transition: .5s;
 }
 
 .highlighted {
@@ -84,4 +104,15 @@ button:active {
   overflow-x: scroll;
   overflow-y: visible;
   height: 90%;
+}
+
+input[type="submit"],
+input[type="button"] {
+  transition: 50ms ease-in-out;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  border-image: var(--highlight-gradient) 1;
+  scale: 1.05;
 }

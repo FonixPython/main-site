@@ -1,0 +1,100 @@
+.imageUploadModal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.imageUploadModal p {
+    font-size: 1.3rem;
+}
+
+.imageUploadModal .previewImage {
+    max-width: 60%;
+    object-fit: contain;
+    max-height: 400px;
+}
+
+.imageUploadModal .settingsPanel .imageTag {
+    display: inline-block;
+}
+
+.imageUploadModal .settingsPanel {
+    width: 50%;
+}
+
+.imageUploadModal .settingsPanel textarea {
+    width: 350px;
+    height: 100px;
+    resize: none;
+    outline: none;
+    padding: 2px;
+}
+
+.imageUploadModal .settingsPanel .tagContainer {
+    min-height: 2rem;
+    width: 90%;
+    margin: 10px;
+    padding: 2px;
+    background-color: var(--highlight);
+    border: 3px solid var(--text-muted);
+    display: block;
+    flex-direction: row;
+}
+
+.imageUploadModal .settingsPanel .tagSuggestionContainer {
+    width: 223px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: -10px;
+    position: relative;
+    z-index: 10;
+    border: 5px ridge var(--highlight);
+}
+
+.imageUploadModal .settingsPanel .tagSuggestionContainer .tagSuggestion {
+    width: 100%;
+    margin: 0;
+    padding: 2px;
+    border: 0;
+    text-align: left;
+    transition: 0.1s;
+}
+
+.imageUploadModal .settingsPanel .tagSuggestionContainer .tagSuggestion:hover {
+    background-color: var(--bg-dark);
+}
+
+.dropZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-dark);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 3px ridge var(--highlight);
+    text-align: center;
+    transition: 0.1s
+}
+
+.dropZone:hover,
+.dropZone.dragging {
+    scale: 1.01;
+    background-color: var(--bg-light);
+}
+
+.dropZone span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.dropZone:focus-visible {
+    outline: 3px ridge var(--highlight-color);
+    outline-offset: 3px;
+}

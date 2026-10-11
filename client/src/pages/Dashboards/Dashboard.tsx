@@ -1,5 +1,4 @@
 import "./Dashboard.css"
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { NavBar } from "../../components/navbar/navbar";
 import { CollapseableCard } from "../../components/collapseableCard/collapseableCard";
@@ -9,13 +8,36 @@ import { DashboardImageCard } from "../../components/dashboardImageCard/dashboar
 import { FileCard } from "../../components/fileCard/fileCard";
 import { AboutEditor } from "../../components/aboutEditor/aboutEditor";
 import { LoginPage } from "../Login/Login";
+import { DashPage, SidebarDashboard } from "../../components/sidebarDashboard/sidebarDashboard";
+import { Package, Image, Upload, CircleInfo } from "pixelarticons/react"
+import { ModalWrapper } from "../../components/ModalWrapper/ModalWrapper";
+import { CreateProjectModal } from "../../components/modals/Project";
+import { UploadImageModal } from "../../components/modals/Gallery";
 
+export interface Project {
+    id: string,
+    title: string,
+    imageUrl: string,
+    shortDescription: string,
+    github: string,
+    public: boolean,
+    dateOfCreation: string
+}
 
 export function Dashboard() {
-    const navigate = useNavigate();
+
+    // Modal things
+
+    interface ModalContent extends React.PropsWithChildren {
+        title: string
+    }
+
+    const [modalOpened, setModalOpened] = useState(false)
+    const [modalContent, setModalContent] = useState<ModalContent>({ title: "", children: <></> })
+
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState<Project[]>([])
 
     async function checkAuthState() {
         const result = await fetch("/api/validateSession")
@@ -41,37 +63,13 @@ export function Dashboard() {
         }
     }
 
-    async function logout() {
-        const result = await fetch("/api/logout")
-        if (result.status == 200) {
-            navigate("/")
-        }
-    }
-
     async function newProject() {
-        const result = await fetch("/api/createProject", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                title: "New project",
-                imageUrl: "placeholder.webp",
-                shortDescription: "Description of a new project",
-                github: "/",
-                public: false
-            })
+        setModalContent({
+            title: "Add new project",
+            children: <CreateProjectModal setModal={setModalContent} setModalOpened={setModalOpened} reloadProjects={reloadProjects} />
         })
-        if (result.status == 200) {
-            reloadProjects()
-        }
+        setModalOpened(true)
     }
-
-    useEffect(() => {
-        checkAuthState();
-        reloadProjects();
-    }, []);
-
 
     const [socials, setSocials] = useState([])
 
@@ -102,9 +100,6 @@ export function Dashboard() {
         }
     }
 
-    useEffect(() => {
-        reloadSocials();
-    }, [])
 
     const [uploads, setUploads] = useState([])
     const [selectedFile, setSelectedFile] = useState(null);
@@ -116,7 +111,7 @@ export function Dashboard() {
         setUploads(jsonResult)
     }
 
-    async function uploadFile(e) {
+    async function uploadFile(e: React.SubmitEvent) {
         e.preventDefault()
         if (!selectedFile) {
             return;
@@ -141,45 +136,15 @@ export function Dashboard() {
             alert("Failed to upload!")
         }
     }
-
-    useEffect(() => {
-        reloadUploads()
-    }, [])
-
-    const [selectedImages, setSelectedImages] = useState(null)
     const [galleryImages, setGalleryImages] = useState([])
 
 
-    async function uploadImage(e) {
-        e.preventDefault()
-        if (selectedImages.length == 0) { return; }
-
-        for (let i = 0; i < selectedImages.length; i++) {
-            const formData = new FormData()
-            formData.append("file", selectedImages[i])
-            formData.append("description", "")
-            formData.append("tags", JSON.stringify([]))
-            formData.append("public", "false")
-
-            try {
-                const result = await fetch("/api/uploadImage", {
-                    method: "POST",
-                    body: formData
-                })
-                if (result.status == 200) {
-                    setSelectedFile(null)
-                    reloadUploads()
-                } else {
-                    alert("Failed to upload!")
-                }
-            } catch (e) {
-                console.log(e)
-                alert("Failed to upload!")
-            }
-        }
-        e.target.reset()
-        alert("Uploaded successfully!")
-        reloadGalleryImages()
+    async function uploadImage() {
+        setModalContent({
+            title: "Upload image",
+            children: <UploadImageModal reload={reloadGalleryImages} setModal={setModalContent} setModalOpened={setModalOpened} />
+        })
+        setModalOpened(true)
     }
 
     async function reloadGalleryImages() {
@@ -189,44 +154,45 @@ export function Dashboard() {
     }
 
     useEffect(() => {
+        checkAuthState();
+        reloadProjects();
+        reloadSocials();
+        reloadUploads()
         reloadGalleryImages()
-    }, [])
+    }, [isLoggedIn])
 
     return (
         <main className="dashboard">
-            <NavBar>
-                {isLoggedIn && <button onClick={logout} className="logoutButton">Logout</button>}
-            </NavBar>
+            <ModalWrapper isopen={modalOpened} setOpen={setModalOpened} title={modalContent.title} children={modalContent.children} />
+            <NavBar></NavBar>
             {(isLoggedIn == false) && <LoginPage onLoggedIn={checkAuthState} />}
-            {isLoggedIn && <div className="dashboardContent">
-                <CollapseableCard title="Projects">
-                    <button onClick={newProject} style={{ width: "95%", marginTop: "10px" }}>Create new project</button>
-                    {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} deletionCallback={reloadProjects} />))}
-                </CollapseableCard>
-                <CollapseableCard title="Gallery">
-                    <form onSubmit={uploadImage}>
-                        <input type="file" name="file" onChange={(e) => setSelectedImages(e.target.files)} multiple />
-                        <input type="submit" value="Upload" />
-                    </form>
-                    {galleryImages.map((image) => (
-                        <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} key={image.id} copyTags={setCopiedTags} copiedTags={copiedTags} />
-                    ))}
-                </CollapseableCard>
-                <CollapseableCard title="Uploads">
-                    <form onSubmit={uploadFile}>
-                        <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
-                        <input type="submit" value="Upload" />
-                    </form>
-                    {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} key={upload.id} />))}
-                </CollapseableCard>
-                <CollapseableCard title="About section">
-                    <AboutEditor />
-                    <CollapseableCard title="Socials">
-                        <button onClick={addSocial} style={{ width: "95%", marginTop: "10px" }}>Add social platform link</button>
-                        {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} key={social.id} />))}
-                    </CollapseableCard>
-                </CollapseableCard>
-            </div>}
+            {isLoggedIn &&
+                <SidebarDashboard>
+                    <DashPage title="Projects" icon={<Package />}>
+                        <button onClick={newProject} style={{ width: "100%", marginTop: "10px" }}>Create new project</button>
+                        {projects.map((project) => (<DashboardProjectCard key={project.id} project={project} reloadProjects={reloadProjects} setModal={setModalContent} setModalOpened={setModalOpened} />))}
+                    </DashPage>
+                    <DashPage title="Gallery" icon={<Image />}>
+                        <button onClick={uploadImage} style={{ width: "100%", marginTop: "10px" }}>Upload image</button>
+                        {galleryImages.map((image) => (
+                            <DashboardImageCard image={image} onDeletion={() => { reloadGalleryImages() }} key={image.id} copyTags={setCopiedTags} copiedTags={copiedTags} />
+                        ))}
+                    </DashPage>
+                    <DashPage title="Uploads" icon={<Upload />}>
+                        <form onSubmit={uploadFile}>
+                            <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
+                            <input type="submit" value="Upload" />
+                        </form>
+                        {uploads.map((upload) => (<FileCard file={upload} deletionCallback={reloadUploads} key={upload.id} />))}
+                    </DashPage>
+                    <DashPage title="About" icon={<CircleInfo />}>
+                        <AboutEditor />
+                        <CollapseableCard title="Socials">
+                            <button onClick={addSocial} style={{ width: "95%", marginTop: "10px" }}>Add social platform link</button>
+                            {socials.map((social) => (<SocialEditorCard social={social} deletionCallback={reloadSocials} key={social.id} />))}
+                        </CollapseableCard>
+                    </DashPage>
+                </SidebarDashboard>}
         </main>
     )
 }

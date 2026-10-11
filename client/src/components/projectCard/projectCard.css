@@ -1,11 +1,12 @@
 .projectCard {
     display: flex;
     flex-direction: column;
-    width: 16rem;
+    width: 260px;
     margin: 5px;
     padding: 7px;
     border: 5px ridge var(--text);
     background-color: var(--bg-light);
+    height: 360px;
 }
 
 .projectCard:hover {
@@ -20,10 +21,12 @@
     display: flex;
     flex-direction: column;
     align-content: center;
+    padding: 2px;
 }
 
 .projectCard img {
-    height: auto;
+    height: 50%;
+    object-fit: cover;
 }
 
 .projectCard h3 {
@@ -34,11 +37,17 @@
 .projectCard p {
     font-size: 1.1rem;
     color: var(--text-muted);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    line-break: strict;
+    height: 100%;
+    width: 100%;
 }
 
 .projectCard .textContainer div {
     width: 95%;
     height: 3rem;
+    padding: 5px;
     color: var(--text);
     background-color: var(--bg-dark);
     display: flex;
