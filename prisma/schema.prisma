@@ -7,50 +7,60 @@ datasource db {
 }
 
 model sessions {
-  token            String        @id @db.VarChar(255)
-  userAgent        String        @db.Text
-  generationDate   DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+  token          String   @id @db.VarChar(255)
+  userAgent      String   @db.Text
+  generationDate DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
 
 model projects {
-  id               Int           @id @default(autoincrement())
-  title            String        @db.Text
-  imageUrl         String        @db.Text
-  shortDescription String        @db.Text
-  github           String        @db.Text
-  public           Boolean       @db.TinyInt @default(false)
-  dateOfCreation   DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+  id               Int      @id @default(autoincrement())
+  title            String   @db.Text
+  imageUrl         String   @db.Text
+  shortDescription String   @db.Text
+  github           String   @db.Text
+  public           Boolean  @default(false) @db.TinyInt
+  dateOfCreation   DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
 
-model about{
-  id              String         @id @db.VarChar(255)
-  data            String         @db.Text
+model about {
+  id   String @id @db.VarChar(255)
+  data String @db.Text
 }
 
-model socials{
-  id               Int           @id @default(autoincrement())
-  name             String        @db.Text
-  url              String        @db.Text
-  iconUrl          String        @db.Text
+model socials {
+  id      Int    @id @default(autoincrement())
+  name    String @db.Text
+  url     String @db.Text
+  iconUrl String @db.Text
 }
 
-model uploads{
-  id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
-  filename         String        @db.Text
-  mimeType         String        @db.Text
-  dateOfUpload     DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+model uploads {
+  id           String   @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
+  filename     String   @db.Text
+  mimeType     String   @db.Text
+  dateOfUpload DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
 
-model gallery{
-  id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
-  imageId          String        @db.Text
-  lowresImageId    String        @db.Text
-  description      String        @db.Text
-  exifData         String        @db.Text
-  tags             String        @db.Text
-  clicks           Int           @db.Int @default(0)
-  downloads        Int           @db.Int @default(0)
-  dateOfCreation   DateTime      @db.Timestamp
-  dateOfUpload     DateTime      @default(dbgenerated("(curtime())")) @db.Timestamp(0)
-  public           Boolean       @db.TinyInt @default(false)
+model schoolNotes {
+  id            String   @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
+  markdown      String   @db.Text
+  attachedFiles String   @db.Text
+  year          Int      @db.Int
+  class         String   @db.Text
+  public        Boolean  @default(false)
+  dateOfUpdate  DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+}
+
+model gallery {
+  id             String   @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
+  imageId        String   @db.Text
+  lowresImageId  String   @db.Text
+  description    String   @db.Text
+  exifData       String   @db.Text
+  tags           String   @db.Text
+  clicks         Int      @default(0) @db.Int
+  downloads      Int      @default(0) @db.Int
+  dateOfCreation DateTime @db.Timestamp
+  dateOfUpload   DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
+  public         Boolean  @default(false) @db.TinyInt
 }

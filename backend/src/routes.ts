@@ -6,6 +6,7 @@ import { getProjects, getProject, createProject, editProject, deleteProject, get
 import { getAboutInfo, setAboutInfo, getSocials, createSocial, editSocial, deleteSocial } from './controllers/about.js';
 import { uploadMiddleware, uploadFile, getFile, deleteFile, getUploads } from './controllers/upload.js';
 import { getPublicImages, downloadImage, registerClick, getAllImages, uploadImage, deleteImage, editImage, getAllTags, getPublicTags } from './controllers/gallery.js';
+import { getAllNotes, getPublicNotes } from './controllers/schoolwork.js';
 
 export const router = express.Router();
 
@@ -56,4 +57,10 @@ router.post("/api/uploadImage", validateSession, uploadMiddleware, uploadImage)
 router.post("/api/deleteImage", validateSession, deleteImage)
 router.post("/api/editImage", validateSession, editImage)
 router.get("/api/getTags", getPublicTags)
-router.get("/api/getAllTags",validateSession, getAllTags)
+router.get("/api/getAllTags", validateSession, getAllTags)
+
+
+// School notes routes
+
+router.get("/api/getPublicNotes", getPublicNotes)
+router.get("/api/getAllNotes", validateSession, getAllNotes)
