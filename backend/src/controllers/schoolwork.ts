@@ -29,7 +29,7 @@ export async function createNote(req: Request, res: Response) {
         const result = await prisma.schoolNotes.create({
             data: {
                 markdown: req.body.markdown,
-                
+
                 attachedFiles: JSON.stringify(req.body.attachedFiles),
                 year: Number(req.body.year),
                 class: String(req.body.class),
@@ -50,7 +50,7 @@ export async function createNote(req: Request, res: Response) {
 
 export async function editNote(req: Request, res: Response) {
     try {
-        if (!req.body.id || (!req.body.public))
+        if (!req.body.id || (!req.body.public)) { }
     } catch (e) {
         console.log(e)
         return res.status(500)
