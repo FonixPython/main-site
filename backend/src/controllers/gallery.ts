@@ -91,7 +91,7 @@ export async function uploadImage(req: Request, res: Response) {
     try {
         if (!req.file) { return res.status(400).json({ error: "No file provided" }) }
         if (req.body.description !== undefined && req.body.tags !== undefined && req.body.public !== undefined) {
-            const originalFileUpload = await prisma.uploads.create({ data: { filename: req.file.filename, mimeType: req.file.mimetype } })
+            const originalFileUpload = await prisma.uploads.create({ data: { filename: req.file.filename, mimeType: req.file.mimetype, feature: "Gallery(full)" } })
             const originaImageFilePath = path.join(process.env.UPLOAD_PATH || './uploads/', originalFileUpload.filename)
             const imageObject: imageData = {
                 imageId: originalFileUpload.id,
@@ -119,7 +119,7 @@ export async function uploadImage(req: Request, res: Response) {
                     iso: exifTags.ISOSpeedRatings?.description || "Unknown"
                 })
             }
-            const lowresFileUpload = await prisma.uploads.create({ data: { filename: `${Math.random().toString(36).substring(2, 15)}.webp`, mimeType: "image/webp" } })
+            const lowresFileUpload = await prisma.uploads.create({ data: { filename: `${Math.random().toString(36).substring(2, 15)}.webp`, mimeType: "image/webp", feature: "Gallery(lowres)" } })
             const lowersImagePath = path.join(process.env.UPLOAD_PATH || './uploads/', lowresFileUpload.filename)
             await sharp(originaImageFilePath)
                 .resize({ height: 600 })

@@ -38,16 +38,19 @@ model uploads {
   id           String   @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
   filename     String   @db.Text
   mimeType     String   @db.Text
+  feature      String   @db.Text @default("Generic")
   dateOfUpload DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
 
 model schoolNotes {
   id            String   @id @default(dbgenerated("(uuid())")) @db.VarChar(255)
-  markdown      String   @db.Text
-  attachedFiles String   @db.Text
+  title         String   @db.Text
+  markdown      String?  @db.Text
+  attachedFiles String?  @db.Text
   year          Int      @db.Int
   class         String   @db.Text
   public        Boolean  @default(false)
+  fileOnly      Boolean  @default(false)
   dateOfUpdate  DateTime @default(dbgenerated("(curtime())")) @db.Timestamp(0)
 }
 
